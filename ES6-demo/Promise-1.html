@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+<script>
+        "use strict"
+        //Promise的用法（1）
+        let promise = new Promise(function (resolve, reject) {
+            console.log('Promise');
+            resolve();
+        });
+
+        promise.then(function () {
+            console.log('Resolved.');
+        });
+
+        console.log('Hi!');
+
+        //Promise的用法（2）
+        function timeout(ms) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve, ms, 'done');
+            });
+        }
+
+        timeout(3000).then(function (value) {
+            console.log(value);
+        });
+
+        //Promise.all()的用法  Promise.race()相同
+        const p1 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                resolve('p1 resolve');
+            }, 1000);
+        });
+
+        const p2 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                reject('p2 reject');
+            }, 2000);
+        });
+
+        const p3 = new Promise(function (resolve, reject) {
+            setTimeout(function () {
+                reject('p3 reject');
+            }, 3000);
+        });
+
+        const pAll = Promise.all([p1,p2,p3]);
+        pAll.then(function(values){
+            console.log(values);
+        }).catch(function(values){
+            console.log(values);
+        });
+    </script>
+</body>
+</html>
