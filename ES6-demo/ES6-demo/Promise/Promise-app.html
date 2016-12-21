@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //图片加载结果执行函数
+        const preloadImage = function(path){
+            return new Promise(function(resolve,reject){
+                var image = new Image();
+                image.onload = resolve;
+                image.onerror = reject;
+                image.src = path;
+            });
+        }
+
+        let path = 'http://oi2eedr7y.bkt.clouddn.com/16-12-13/37600392-file_1481620144409_179ed.jpg';
+        let pathError = 'http://oi2eedr7jpg';
+        preloadImage(path)
+        .then(function(){
+            console.log('image was loaded');
+        })
+        .catch(function(){
+            console.log('error');
+        });
+
+        preloadImage(pathError)
+        .then(function(){
+            console.log('image was loaded');
+        })
+        .catch(function(){
+            console.log('error');
+        });
+    </script>
+</body>
+
+</html>

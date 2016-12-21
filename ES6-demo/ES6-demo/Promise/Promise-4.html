@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+
+        //finally的用法，无论如何finally最后都会执行，注意：'最后'。
+        Promise.prototype.finally = function(callback){
+            let P = this.constructor;
+            return this.then(function(value){
+                return P.resolve(callback()).then(function(){
+                    return value;
+                });
+            },
+            function(reason){
+                return P.resolve(callback()).then(function(){
+                    throw reason;
+                });
+            });
+        }
+
+        let p = new Promise(function(resolve,reject){
+            setTimeout(function(){
+                resolve('Promise One');
+            },500)
+        });
+
+        p.then(function(s){
+            console.log(s);
+            return new Promise(function(resolve,reject){
+                setTimeout(function(){
+                    resolve('Promise Two');
+                },500);
+            });
+        }).then(function(s){
+            console.log(s);
+        }).finally(function(){
+            console.log('finally');
+        });
+    </script>
+</body>
+
+</html>

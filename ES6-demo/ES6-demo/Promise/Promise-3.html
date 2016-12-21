@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //done 保证捉到任何可能出现的错误
+        Promise.prototype.done = function (onResolved, onRejected) {
+            this.then(onResolved, onRejected)
+                .catch(function (reason) {
+                    //.....
+                    setTimeout(function () {
+                        throw reason;                    
+                    }, 0);
+                });
+        }
+
+        var someAsyncThing = function () {
+            return new Promise(function (resolve, reject) {
+                resolve(2);
+            });
+        };
+
+        someAsyncThing()
+            .then(function(s){
+                return Promise.reject(s * s);
+            })
+            .catch(function(s){
+                return Promise.resolve(s * s);
+            })
+            .then(function(s){
+                return Promise.reject(new Error(s * s));
+            }).done();
+    </script>
+</body>
+
+</html>
