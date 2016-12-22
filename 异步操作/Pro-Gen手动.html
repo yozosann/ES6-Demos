@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //1.将需要执行的函数包装成Promise对象
+        let p1 = function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve,1000,'p1 get data:' + data); 
+            })
+        }
+
+        let p2 = function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve,2000,'p2 get data:' + data); 
+            })
+        }
+
+        //2.按照同步的写法写流程，在Promise函数前加yield
+        let gen = function* (){
+            let f1 = yield p1('first');
+            console.log(f1);
+            let f2 = yield p2('second');            
+            console.log(f2);
+        }
+
+        //3.手动一步一步执行gen，可以想象异步函数数量庞大时，这是不可能的。
+        var g = gen();
+
+        g.next().value.then(function(data){
+            g.next(data).value.then(function(data){
+                g.next(data);
+            });
+        });
+    </script>
+</body>
+
+</html>

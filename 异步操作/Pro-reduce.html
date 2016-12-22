@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** 情景：
+         *  要取一系列文件，但是每个文件的取出时间并不确定
+         *  如何完成最后将取出结果按照取出时的输入顺序输出
+         *  方法：
+         *  将取出函数用Promise对象包装，然后依次传入数据
+         *  将生成的Promise实例传入一个数组中，然后使用
+         *  Array.reduce链式输出数据。
+         *  这样做的原因：
+         *  可以使加载完数据的函数等待之前没有加载完的数据
+         *  加载完成输出后再输出
+         */
+        "use strict"
+        //1.定义一个 数据取出器Promise 生成函数
+        let getData = function(data){
+            return new Promise(function(resolve,reject){
+                setTimeout(resolve,1000,'get data:' + data); 
+            });
+        }
+
+        //2.定义一个参数数组，参数用来传送给取出器取出数据
+        const data = ['1','2','3','4','5','6'];
+
+        //3.定义一个数据取出器Promise实例的数组
+        const dataProArr = data.map(function(value){
+            return getData(value);
+        });
+
+        //4.利用数组的reduce依次执行
+        dataProArr.reduce(function(prePro,currentPro){
+            return prePro.then(function(){
+                return currentPro;
+            }).then(function(data){
+                console.log(data);
+            });
+        },Promise.resolve())
+    </script>
+</body>
+
+</html>

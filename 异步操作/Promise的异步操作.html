@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** 情景：
+         *  有两个读取数据函数，依次传入数据然后从某处读取数据
+         *  当数据从某处返回时，则输出数据，执行完成后接着执行
+         *  下一个读取数据操作。
+         */
+        "use strict"
+        ///1.将需要执行的函数包装成Promise对象
+        let p1 = function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve,1000,'p1 get data:' + data); 
+            })
+        }
+
+        let p2 = function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve,2000,'p2 get data:' + data); 
+            })
+        }
+
+        //2.传统地一步一步then执行函数
+        p1('first')
+        .then(function(data){
+            console.log(data);
+        })
+        .then(function(){
+            return p2('second');
+        })
+        .then(function(data){
+            console.log(data);
+        });
+    </script>
+</body>
+
+</html>

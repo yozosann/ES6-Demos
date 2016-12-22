@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        /** 情景：
+         *  有两个读取数据函数，依次传入数据然后从某处读取数据
+         *  当数据从某处返回时，则输出数据，执行完成后接着执行
+         *  下一个读取数据操作。
+         */
+        "use strict"
+        //1.将需要执行的函数包装成Promise对象
+        let p1 = function (data) {
+            return new Promise(function (resolve, reject) {
+                //核心的需要执行的函数
+                setTimeout(resolve,1000,'p1 get data:' + data); 
+            })
+        }
+
+        let p2 = function (data) {
+            return new Promise(function (resolve, reject) {
+                setTimeout(resolve,2000,'p2 get data:' + data); 
+            })
+        }
+
+        //2.按照同步的写法写流程，在Promise函数前加yield
+        let gen = function* (){
+            let f1 = yield p1('first');
+            console.log(f1);
+            let f2 = yield p2('second');            
+            console.log(f2);
+        }
+
+        //3.写一个Generator的自动执行器，将会异步地执行gen内容
+        function run(gen){
+            let g = gen();
+          
+            function next(data){
+                let result = g.next(data);
+                if(result.done) return result.value;
+                result.value.then(function(data){
+                    next(data);
+                });
+            }
+
+            next();
+        }
+
+        //4.执行
+        run(gen);
+    </script>
+</body>
+
+</html>
