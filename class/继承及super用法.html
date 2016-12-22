@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //定义类
+        class Point {
+            constructor(x, y) {
+                this.x = x;
+                this.y = y;
+            }
+
+            toString() {
+                return '(' + this.x + ', ' + this.y + ')';
+            }
+        }
+
+        class colorPoint extends Point{
+            constructor(x,y,color){
+                //子类的构造函数中不会创建this，而是由super创建，若
+                //this.color = color;  //报错
+                //super(x,y);
+                super(x,y);
+                this.color = color;
+            }
+
+            //Super作为对象使用 相当于Point.prototype，但会绑定color的this
+            toString(){
+                return 'My color: ' + this.color + '  ' + super.toString();
+                //在这里 super.toString 相当于 super.toString.call(this);
+            }
+        }
+    </script>
+</body>
+
+</html>

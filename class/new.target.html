@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //1.当new.target在constructor内部时，表示如果没有用new命令调用constructor
+        //返回 undefined
+
+        //需要转ES5
+        class NewTargetTest{
+            constructor(){
+                if(new.target == undefined) console.log('no new');
+            }
+        }
+
+        const t = new NewTargetTest();
+        t.contructor; 
+    </script>
+</body>
+
+</html>

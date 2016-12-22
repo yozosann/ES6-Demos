@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+
+        // static method
+        class Person{
+            static sayHalo(){
+                console.log('Halo !');
+            }
+        }
+
+        Person.sayHalo(); //Halo !
+
+        //static prop
+        Person.abc = 2;
+        console.log(Person.abc); // 2
+       
+        class Student extends Person {
+            //子类内部可以调用静态方法和属性
+            static sayNo(){
+                super.sayHalo();
+                console.log(super.abc + '   no');
+            }
+        };
+
+        //子类可以继承
+        Student.sayHalo(); //Halo !
+        Student.sayNo(); //2   no
+    </script>
+</body>
+
+</html>
