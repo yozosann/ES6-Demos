@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        //不是字符串调用默认toString方法，未声明报错
+
+        // ex1:
+        let name = 'Yozo';
+        let years = 21;
+        console.log(`ex1: I am ${name},${years} years old.`);
+
+        //ex2: 转义反引号
+        let greeting = `This is back quote :\` `; 
+        console.log(`ex2: ${greeting}`);
+
+        //ex3: 使用模板字符串表示多行字符时 空位（空格和缩进）保留     
+        console.log(`ex3:
+        <ul>
+          <li>Yozo</li>
+          <li>21</li>
+        </ul>
+        `); 
+
+        //ex4: 大括号内可以放表达式
+        console.log(`ex4: 7*7 = ${7 * 7}`); 
+
+        //ex5: 大括号内可以放函数
+        function testForEx5(arr){
+            return Math.max.apply(Math,arr);
+        }
+        console.log(`ex5: [1,2,4,5,8,4,15]的最大值为 ${testForEx5([1,2,4,5,8,4,15])}`);
+
+        //ex6: 模板字符串可嵌套
+        const getMessage = function(info){
+            for (let message of info) {
+                return `<tr>
+                          <td>${message.name}</td>
+                          <td>${message.Tel}</td>
+                      </tr>`
+            }
+        }
+        const getTable = function(info){
+            return `<table>
+                      <tr>
+                        <th>Name</th>
+                        <th>Tel</th>
+                      </tr>
+                      ${getMessage(info)}
+                    </table>`
+        }
+        const infoArr = [
+            {name:'Yozo',Tel:123},
+            {name:'Yoko',Tel:456}
+        ];
+
+        console.log(getTable(infoArr));
+    </script>
+</body>
+</html>

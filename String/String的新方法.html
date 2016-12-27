@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+    "use strict"
+        console.log('\u{20BB7}');
+
+        var s = 'Hello world!';
+        console.log(s.startsWith('H'));
+        console.log(s.startsWith('Hello'));
+        console.log(s.endsWith('f'));
+        console.log(s.includes('o'));
+        
+        console.log(s.startsWith('H',2));  //第二个参数：从下标x开始搜索
+        console.log(s.includes('o',2));    //第二个参数：从下标x开始搜索
+        console.log(s.endsWith('w',7));    //第二个参数：针对前n个字符进行判断
+
+        console.log('x1'.repeat(5));  //Indinity 和 负数报错 否则转为数字取整（0）
+
+     //   console.log('x1'.padStart(8,'a')); //不支持
+    </script>
+</body>
+</html>
