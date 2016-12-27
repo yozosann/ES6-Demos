@@ -1,0 +1,30 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "0.1.0",
+    "command": "Chrome",
+    "windows": {
+        "command": "C:/Program Files (x86)/Google/Chrome/Application/chrome.exe"
+    },
+    "args": ["${file}"],
+    "showOutput": "never"
+}
+
+// {
+//     // See https://go.microsoft.com/fwlink/?LinkId=733558
+//     // for the documentation about the tasks.json format
+//     "version": "0.1.0",
+//     "command": "babel",
+//     "isShellCommand": true,
+//     "tasks": [
+//         {
+//             "taskName": "watch",
+//             "suppressTaskName": true,
+//             "isBuildCommand": true,
+//             "isWatching": true,
+//             "args": [
+//                 "src","--out-dir","lib","-w"
+//             ]
+//         }
+//     ]
+// }
