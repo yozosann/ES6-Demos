@@ -37,15 +37,17 @@
 
         //ex6: 模板字符串可嵌套
         const getMessage = function(info){
-            for (let message of info) {
+            return info.map(function (message) {
                 return `<tr>
                           <td>${message.name}</td>
                           <td>${message.Tel}</td>
-                      </tr>`
-            }
+                      </tr>
+                      `
+            }).join('').trim(); //trim() 去除尾部换行符
         }
         const getTable = function(info){
-            return `<table>
+            return `ex6:   
+                    <table>
                       <tr>
                         <th>Name</th>
                         <th>Tel</th>
