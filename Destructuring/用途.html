@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //变量交换
+      let x = 'I am x';
+      let y = 'I am y';
+      [x,y] = [y,x];
+      console.log('变量交换：','x:',x,'  y:',y);
+
+      //从函数返回多个值
+      function return123(){
+          return [1,2,3];
+      }
+      let [a,b,c] = return123();
+      console.log('return123：',a,b,c);
+
+      //函数定义
+      function f({x, y, z}) { console.log('f：',x,y,z) };
+      //调用
+      f({ z: 8, x: 9, y: 20 });
+
+      //函数参数的默认值 （未引用jq,仅做示范）
+        // jQuery.ajax = function (url, {
+        //     async = true,
+        //     beforeSend = function () { },
+        //     cache = true,
+        //     complete = function () { },
+        //     global = true
+        // }) { };
+
+      //遍历Map结构
+      const map = new Map();
+      map.set('first', 'hello');
+      map.set('second', 'world');
+      for(let [key,value] of map){
+          console.log(key + ' is ' + value);
+      }
+    </script>
+</body>
+</html>

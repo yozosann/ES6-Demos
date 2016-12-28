@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //最普通的解构,按照key来赋值
+      var { foo, bar } = { bar:'bbb', foo:'aaa' };
+      //   其实他的本质是这样的，《对象的扩展》允许这样形式的缩写
+      //   var {
+      //       foo:foo,
+      //       bar,bar
+      //   }
+      console.log('成功：', foo, bar);
+
+      //由于const,let不允许二次复制，所以声明后想使用解构复制必须：
+      let a;
+      ({a} = {a:2});
+      console.log('加圆括号：',a);
+
+      //嵌套匹配
+      var obj = {
+          p:[
+              'Hello',
+              { y: 'World' }
+          ]
+      };
+      var { p: [x, {y}] } = obj;
+      console.log('嵌套解构赋值：',x,y);
+
+      //数组是特殊的对象
+      var arr = [1, 2, 3];
+      var {0: first, [arr.length - 1]: last} = arr;
+      console.log('用对象解构数组：', first, last);
+    </script>
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //字符串 , 字符串会自动转为字符串对象
+      const [a, b, c, d, e] = 'hello';
+      console.log('字符串：', a, b, c, d, e);
+
+      //用对象解构 来赋值属性
+      let {length: len} = 'hello';  
+      console.log('长度：',len);
+
+      //用对象解构 来赋值方法
+      let {toString: s} = 'hello';
+      console.log('toString方法：',s === String.prototype.toString); //true
+    </script>
+</body>
+</html>

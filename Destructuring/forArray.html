@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //最普通的解构
+      let [a,b,c] = [1,2,3];
+      console.log('成功：',a,b,c);
+
+      //解构失败
+      let [d] = [];
+      console.log('失败：',d);
+
+      //不完全解构
+      let [e,[f],g] = [1,[2,4],9];
+      console.log('不完全解构：',e,f,g);
+
+      //设置默认值，当严格等于undefined时,取默认值
+      let [x = 'a',y = 'b'] = [null,undefined];
+      console.log('默认值：',x,y);
+    </script>
+</body>
+</html>
