@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      
+        //Array.form 将类数组对象转为真正的数组,chrome暂不支持
+        const arrayLike = {
+            '0':'a',
+            '1':'b',
+            '2':'c',
+            length:3
+        };
+        const arr1 = Array.from(arrayLike);
+        console.log(`Array.form: ${arr1}`); 
+
+        //Array.of 将一组值转化为数组,chrome暂不支持
+        const arr2 = Array.of(1,23,44);
+        console.log(`Array.of: ${arr2}`);
+
+        //copyWithin() 将一组值转化为数组,chrome暂不支持
+        const arr3 = [1,2,3,4,5].copyWithin(0,3);
+        console.log(`copyWithin(): ${arr3}`);
+      
+        //finx()，findIndex()用法相同，不过返回的是下标，在这里返回2
+        console.log('finx():',[1,2,33,4].find(function(x){
+            return x >= 3;
+        }))
+
+        //fill() 填充数组
+        const arr5 = ['',undefined,null].fill(7);
+        //后两个参数表示填充的其实和末尾位置
+        const arr6 = [9,undefined,9].fill(7,1,2);
+        console.log(`fill(): ${arr5}  多参数: ${arr6}`);
+
+        //includes() 属于ES7 和indexOf相似，但可以检验NaN的值
+        console.log('includes():',[NaN].includes(NaN));
+    </script>
+</body>
+</html>
