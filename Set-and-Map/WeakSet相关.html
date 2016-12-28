@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //WeakSet 成员只能为对象，且WeakSet中的对象都是弱引用
+      //var ws = new WeakSet();
+      //ws.add(1);   TypeError
+
+      //接受一个拥有iterable接口的对象做参数
+      var ws = new WeakSet([[1, 2], [3, 4]]); 
+
+      //不可遍历， 拥有has delete add 没有clear。
+    </script>
+</body>
+</html>
