@@ -16,7 +16,14 @@
             length:3
         };
         const arr1 = Array.from(arrayLike);
+        //form第二个参数，相当于map方法，讲类数组转为数组时进行
+        //form还有第三个参数，绑定this
+        const arrForm = Array.from(arrayLike,function(value){
+            return value + value;
+        });
         console.log(`Array.form: ${arr1}`); 
+        console.log(`Array.form(function): ${arrForm}`); 
+
 
         //Array.of 将一组值转化为数组,chrome暂不支持
         const arr2 = Array.of(1,23,44);
