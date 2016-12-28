@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //Map的遍历方法有entires,keys,values,forEach 效果和Set一样
+      //主要讲一下forEach
+      let map = new Map([
+          ['name','Yozo'],
+          ['years',21],
+          ['Schoole','DaLian LiGong']
+      ]);
+      //函数参数和数组参数一样 表示，值 键 对象本身
+      map.forEach(function(value,key,map){
+          console.log('value: ',value,'  key:',key);
+      });
+
+      //将Map转数组使用map,filter等方法
+      let map0 = new Map()
+      .set(1, 'a')
+      .set(2, 'b')
+      .set(3, 'c');
+
+      const arr = [...map0].map(function([key,value]){
+          return [key,value + value + value];
+      });
+
+      let map1 = new Map([...map0].map(function([key,value]){
+          return [key,value + value + value];
+      }));
+      console.log('map1:',map1);
+
+      let map2 = new Map([...map0].filter(function([key,value]){
+          return key >= 2;
+      }));  
+      console.log('map2:',map2);
+    </script>
+</body>
+</html>
