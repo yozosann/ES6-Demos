@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //Set keys(),values,entires(),forEach()
+      const s1 = new Set(['Beijing','Shanghai','Dalian']);
+      console.log('keys():');
+      for(let item of s1.keys()){
+          console.log(item);
+      }
+      console.log('values():');
+      for(let item of s1.values()){
+          console.log(item);
+      }
+      console.log('entires():');
+      for(let item of s1.entries()){
+          console.log(item);
+      }
+
+      //forEach()同数组，且[...set]可以运用数组的map,filter方法
+      let set = new Set([1,2,3]);
+      set = new Set([...set].map(function(value){
+          console.log(value * value);
+      }));
+    </script>
+</body>
+</html>

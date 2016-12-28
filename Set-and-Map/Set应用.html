@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //Set 实现交并差集合
+      let a = new Set([1,2,3]);
+      let b = new Set([2,3,4]);
+
+      //并集
+      let union = new Set([...a,...b]);
+      console.log('并集：',union);
+
+      //交集
+      let intersect = new Set([...a].filter(function(value){
+          return b.has(value);  //has()为Set的方法，判断数组中是否含有某个值
+      }));
+      console.log('交集：',intersect);
+
+      //差集
+      let difference = new Set([...a].filter(function(value){
+          return !b.has(value);
+      }));
+      console.log('差集合：',difference);
+
+      //直接在遍历操作中改变原Set结构
+      //方法一：map + 重新赋值
+      let set = new Set([1,1,8,1,1,4]);
+      set = new Set([...set].map(function(value){
+          return value * value;
+      }));
+      console.log('map：',set);
+
+      //方法二：Array.form + 重新赋值
+      set = new Set([1,1,8,1,1,4]);
+      set = Array.from(set,function(value){
+          return value + value;
+      });
+      console.log('Array.from：',set);
+    </script>
+</body>
+</html>
