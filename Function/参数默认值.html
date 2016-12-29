@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //1.默认参数
+      function log(x, y = "World"){
+          console.log(x,y);
+      }
+      log('Hello');
+      log('Hello','China');
+
+      //2.与解构赋值默认值结合使用
+      function foo({x, y = 5}){
+          console.log(x,y);
+      }
+      foo({});
+      foo({x: 1});
+      foo({x: 10086, y: 888});
+      //foo(); TypeEroor
+
+      //3.！！解构复制默认值与函数默认值的结合
+      //写法一：默认参数为{},解构赋值设置了默认值
+      function m1({x = 0,y = 0} = {}){
+          console.log([x,y]);
+      }
+      //写法二：默认参数为{x: 0, y: 0}，解构赋值没有设置默认值
+      function m2({x, y} = {x: 0, y: 0}){
+          console.log([x,y]);
+      }
+      //他们的参数形式都为 function m({x,y})
+
+      //都没有参数的情况
+      m1(); //得到默认值{}，然后发生解构赋值，解构赋值有默认值，故 x=0,y=0
+      m2(); //得到默认值{x: 0, y: 0}，然后发生解构赋值，故 x=0，y=0
+
+      //都有参数的情况 ，都得到对象{x: 1,y: 2}，发生解构赋值，x=1,y=2
+      m1({x: 1,y: 2}); 
+      m2({x: 1,y: 2});
+
+      //x有y无
+      m1({x: 6}); //得到对象{x: 6} ,然后发生解构赋值{x = 0,y = 0} = {x: 6},由于y有默认值，故x=6,y=0
+      m2({x: 6}); //得到对象{x: 6} ,然后发生解构赋值{x, y} = {x: 6},由于y没有默认值，故x=6,y=undefined
+
+      //有对象无值
+      m1({}); //得到对象{} ,然后发生解构赋值{x = 0,y = 0} = {},由于y有默认值，故x=6,y=0
+      m2({}); //得到对象{} ,然后发生解构赋值{x, y} = {x: 6},由于x,y都没有默认值，故x和y都等于undefined
+
+      //4.只有对应值严格等于undefined的时候才会触发默认值，null不会触发默认值
+      m1({x: null, y:null});  //null null
+
+      //且默认参数的位置应该放在最后，放在中间也可以实现，但是没必要这么傻逼。。
+
+      //5.函数length的属性，指定了默认参数后length的值失真
+      console.log((function (a) {}).length) // 1
+      console.log((function (a = 5) {}).length) // 0
+      console.log((function (a, b, c = 5) {}).length) // 2
+      console.log();
+      //6.作用域 ，参数和函数在同一个作用域即函数作用域，如果没有再查找全局作用域
+      console.log('6.');
+      var x = 1;
+      function f(x, y = x){
+          console.log(y);
+      }
+      f(2); //此时结果为2 ，因为给函数作用域中的x赋值后，y才等于x
+
+      //根据阮一峰老师 写过来 还有一些例子 出错有待考证。
+
+      //7.更复杂的栗子~  保护作用域 用自执行函数扩了起来 ,此处也有问题，，不要管了
+    //   console.log('');
+    //   console.log('7.');
+    //   (function test() {
+    //       var x = 1;
+    //       function foo(x, y = function() { x = 2; }){
+    //           var x = 3;
+    //           y();
+    //           console.log(x);
+    //       }
+    //       foo();
+    //   })()
+    </script>
+</body>
+</html>
