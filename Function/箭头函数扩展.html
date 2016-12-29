@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        /*1.使用注意点：
+         *（1）函数体内的this对象指定义时所在的对象
+         *（2）不可以用作构造函数
+         *（3）没有arguments对象，若需使用请用rest函数，没有super,new.target
+         *（4）不能用作Generator函数
+         *（5）没有this也就没有 apply call bind
+         */
+
+         //for（1）
+         class Timer{
+             constructor(){
+                 this.s1 = 0;
+                 this.s2 = 0;
+             }
+             t1(){
+                 setInterval(() => this.s1 ++ ,100);
+             }
+             t2(){
+                 setInterval(function(){
+                     this.s2 ++
+                 },100);
+             }
+         }
+
+         const t = new Timer();
+         t.t1();
+         t.t2();
+         //因为t1的this绑定到了本对象上，能取到s1，而t2的this指的是window的this
+         setTimeout(function(){console.log(t.s1,t.s2);},1000); //10 0
+         
+         //！！2.例子：管道机制
+         const pipeline1 = (...funcs) =>
+           val => funcs.reduce((a, b) => b(a),val); 
+         //相当于
+         const pipeline2 = function(...funcs){
+             return function(val){
+                 return funcs.reduce(function(a, b){
+                     return b(a);
+                 }, val);
+             }
+         }
+
+         const plus = x => x + x;
+         const mlut = x => x * x;
+         const addThenMult1 = pipeline1(plus, mlut);
+         const addThenMult2 = pipeline2(plus, mlut);
+         //结果相同
+         console.log(addThenMult1(5));
+         console.log(addThenMult2(5));
+    </script>
+</body>
+
+</html>
