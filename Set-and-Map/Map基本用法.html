@@ -1,37 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Document</title>
 </head>
+
 <body>
     <script>
-      "use strict"
-      //Map的实质为键值对，但是由于object的键只能是字符串，给使用带来的很大限制，而Map没有这个限制。
-      var m = new Map();
-      var o = {p:'Hello World'};
+        "use strict"
+        //Map的实质为键值对，但是由于object的键只能是字符串，给使用带来的很大限制，而Map没有这个限制。
+        var m = new Map();
+        var o = {
+            p: 'Hello World'
+        };
 
-      m.set(o,'content');
-      console.log(m.get(o),m.has(o));
-      m.delete(o);
-      console.log('删除后：',m.has(o));
+        m.set(o, 'content');
+        console.log(m.get(o), m.has(o));
+        m.delete(o);
+        console.log('删除后：', m.has(o));
 
-      //Map接受一个键值对数组作为参数
-      var map = new Map([
-          ['Yozo','21'],   // {'Yozo':'21'} 不能识别 用数组形式
-          ['Yoko','20']
-      ]);
-      //工作本质： item.forEach(([key,value]) => map.set(key,value));
-      console.log('map长度: ',map.size);
-      // Tip: true 和 'true'是不同的键；如果连续复制两次同样的键，后者的值覆盖前者；读取一个不存在的键，返回undefined；
+        //Map接受一个键值对数组作为参数
+        var map = new Map([
+            ['Yozo', '21'], // {'Yozo':'21'} 不能识别 用数组形式
+            ['Yoko', '20']
+        ]);
+        //工作本质： item.forEach(([key,value]) => map.set(key,value));
+        console.log('map长度: ', map.size);
+        // Tip: true 和 'true'是不同的键；如果连续复制两次同样的键，后者的值覆盖前者；读取一个不存在的键，返回undefined；
 
-      //引用同一个对象才能得到正确的值！！
-      map = new Map();
-      var arr = ['2'];
-      var arrCopy = arr;
-      map.set(arr,'arr: 2');
-      console.log("用['2']取值：",map.get(['2']));
-      console.log("用arrCopy取值：",map.get(arrCopy));
+        //引用同一个对象才能得到正确的值！！
+        map = new Map();
+        var arr = ['2'];
+        var arrCopy = arr;
+        map.set(arr, 'arr: 2');
+        console.log("用['2']取值：", map.get(['2']));
+        console.log("用arrCopy取值：", map.get(arrCopy));
     </script>
 </body>
+
 </html>
