@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <div id="div1">
+        <div id="child">aaa</div>
+    </div>
+</head>
+<body>
+    <script>
+      "use strict"
+      //WeakSet 成员只能为对象，且WeakSet中的对象都是弱引用
+      //var ws = new WeakSet();
+      //ws.add(1);   TypeError
+
+      //接受一个拥有iterable接口的对象做参数
+      var ws = new WeakSet([[1, 2], [3, 4]]); 
+
+      //不可遍历， 拥有has delete add 没有clear。
+
+      //WeakMap 与Map解构基本类似 区别在于它只接受对象作为键名(null除外)
+      var wm = new WeakMap();
+      //wm.set(1,2);  TypeError
+      var div1 = document.getElementById('div1');
+      var child = document.getElementById('child');
+      wm.set(div1,'parent');
+      wm.set(child,'child');
+      console.log('DOM节点删除前是否有child:',wm.has(child));
+      child = null;
+      console.log('DOM节点删除后是否有child:',wm.has(child));
+    </script>
+</body>
+</html>

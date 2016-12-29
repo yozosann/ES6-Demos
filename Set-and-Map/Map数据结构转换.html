@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+      "use strict"
+      //Map转为数组
+      let myMap = new Map().set(true, 7).set({ foo: 3 }, ['abc']);
+      console.log([...myMap]); 
+
+      //数组转为Map
+      let myMap1 = new Map([[true, 7], [{ foo: 3 }, ['abc']]]);
+      console.log(myMap1);
+
+      //Map转为对象： 所以Map的键都是字符串
+      function strMapToObj(strMap){
+          let obj = Object.create(null);
+          for(let [k,v] of strMap){
+              obj[k] = v;
+          }
+          return obj;
+      }
+      let myMap2 = new Map([['abc',1],['bcd',2]]);
+      console.log(strMapToObj(myMap2));
+
+      //对象转为Map
+      function objToStrMap(obj){
+          let strMap = new Map();
+          for(let key of Object.keys(obj)){
+              strMap.set(key,obj[key]);
+          }
+          return strMap;
+      }
+      let obj = {'abc':1,'bcd':2};
+      console.log(objToStrMap(obj));
+
+      //Map转Json
+      //键名都是字符串的
+      function strMapToJson(strMap){
+          return JSON.stringify(strMapToObj(strMap));
+      }
+      console.log('Json',strMapToJson(myMap2));
+
+      //键名含有非字符串的，转化为数组JSON
+      function mapToArrayJson(map){
+          return JSON.stringify([...map]);
+      }
+      console.log('ArrayJson',mapToArrayJson(myMap));
+
+      //JSON转Map 正常情况下键名都是字符串
+      function jsonToStrMap(jsonStr){
+          return objToStrMap(JSON.parse(jsonStr));
+      }
+      console.log(jsonToStrMap('{"yes":true,"no":false}'));
+    </script>
+</body>
+</html>
