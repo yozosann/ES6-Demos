@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //什么事尾调用？ 在函数返回时的前一步调用函数，则为尾调用
+        function g(){};
+
+        function f1(a){
+            return g(a);  //尾调用
+
+            //1. return g(a) + 1 //最后一步是加法运算 不是尾调用
+
+            //2. var f = g(a);
+            //     return f;  //最后一步是赋值 不是尾调用
+        }
+
+        //尾调用的优势， 只保留一个调用栈 大大优化内存。
+        //n次递归 就有n个调用栈， 如果把递归写成尾递归，那么只保留一个调用栈内存大大优化
+
+        function Fibonacci1 (n){
+            if(n <= 1){return 1};
+            return Fibonacci1(n - 1) + Fibonacci1(n - 2);
+        }
+        console.log(Fibonacci1(10)); //89
+        //Fibonacci1(500); 
+        //堆栈溢出，页面崩溃
+
+        //尾递归
+        function Fibonacci2 (n,ac1 = 1, ac2 = 1){
+            if(n <= 1){return ac2};
+
+            return Fibonacci2(n - 1 ,ac2 ,ac1 + ac2);
+        }
+        console.log(Fibonacci2(10));
+        console.log(Fibonacci2(500)); //豪无问题
+
+        //在ES6出来之前，问题就是函数调用不直观，需要传入几个参数才能
+        //改成尾递归，所以又出现了很多将多参数改成单参数的办法，但是
+        //ES6的默认函数值出现，可以以最直观最简便的方式达到尾优化效果
+    </script>
+</body>
+
+</html>
