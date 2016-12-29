@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //扩展运算符就是三个点... ,能把带有Iterator接口的对象扩展开来
+        console.log(...[1,2,3]);
+        const obj = {
+            0:'aaa',
+            1:'bbb',
+            2:'ccc',
+            length:3
+        };
+        console.log(...Array.from(obj));
+
+        //用于函数调用
+        function add(x,y){
+            console.log(x + y);
+        }
+        var numbers = [222,22];
+        add(...numbers);
+
+        //！！代替数组的apply方法
+        //ES5 
+        Math.max.apply(null, [14, 3, 77]);
+        //ES6
+        Math.max(...[14,3,77]);
+
+        var arr1 = [0, 1, 2];
+        var arr2 = [4, 5, 6];
+        //ES5 
+        Array.prototype.push.apply(arr1,arr2);  //0 1 2 4 5 6
+        arr1 = [0, 1, 2];
+        //ES6
+        arr1.push(...arr2);   //0 1 2 4 5 6
+
+        //扩展函数的应用
+        //ex1：合并数组
+        var array1 = ['a','b'];
+        var array2 = ['w','s'];
+        var array3 = ['wwww'];
+        var array = [...array1,...array2,...array3];
+        console.log('ex1:',array);
+
+        //ex2: 与赋值解构组合拆分数组,并且这里也只能放在最后一位
+        var arr3 = [1, 2, 3, 4, 5, 6, 7];
+        var [a1,...rest] = arr3;  //rest自动声明为数组
+        console.log('ex2: a1:',a1,'   rest:',rest);
+
+        //ex3： 将字符串迅速转化为数组
+        var haloArr = [...'halo'];
+        console.log('ex4:',haloArr);
+
+        //ex4： Generator函数
+        var go = function* (){
+            yield 1;
+            yield 2;
+            yield 3;
+        };
+        console.log('ex4:',[...go()]);
+    </script>
+</body>
+
+</html>
