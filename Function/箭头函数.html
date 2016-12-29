@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //最简单的箭头函数， =>前代表参数  后代表函数体 单行时隐式返回
+        var f = v => v;
+        //相当于 var f = function(v){ return v };
+        console.log(f(2));
+
+        //当参数大于一个时用括号括起来
+        var f1 = (x,y) => x + y;
+        console.log(f1(2,3));
+
+        //当返回语句超过一条时
+        var f2 = (x,y) => {
+            var z = 10;
+            return x + y + z;
+        }
+        console.log(f2(2,3));
+
+        //由于{}被解析为代码块，所以想一句话返回对象时必须加括号
+        var f3 = (name,years) => ({name: name,years: years});
+        console.log(f3('Yozo',21));
+
+        //可以和解构一起使用
+        var f4 = ({firstName,lastName}) => firstName + ' ' + lastName;
+        console.log(f4({lastName: 'TT' ,firstName: 'Yozo'}));
+
+        //简便了很多函数写法
+        var arr = [1, 2, 3, 4, 4];
+        console.log(arr.map(x => x + x));
+
+        //和rest函数配合
+        var f5 = (...nums) => [...nums];
+        console.log(f5(1,2,3,3,3));
+    </script>
+</body>
+
+</html>
