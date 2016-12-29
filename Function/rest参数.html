@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //基本用法 ,这个和args的区别在于args是类数组，不能直接使用数组的方法
+        function concat(...values){             //这里不传参 
+            console.log(values.join(' '));      //values = Array.prototype.slice.call(arguments);
+        }
+        concat('I','have','a','apple');
+        
+        //rest参数必须是尾参数
+        function add(sum, ...values){
+            for(let i of values){
+                sum += i;
+            }
+            console.log(sum);
+        }
+        add(12,1,1,1,1,1);
+
+        //函数length不计算rest参数
+        console.log((function(a) {}).length );
+        console.log((function(...a) {}).length );
+        console.log((function(a,...b) {}).length );
+    </script>
+</body>
+
+</html>
