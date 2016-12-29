@@ -29,6 +29,12 @@
           return [key,value + value + value];
       });
 
+      //为什么map中function的参数是[key,value]?
+      //因为Map扩散了以后是一个键值对的数组： [[key1,value1],[key2,value2],...]；
+      //然后成员为[key1,value1],[key2,value2],...;
+      //故.map(function(value))这里的value就是[keyx,valuex];
+      //故这里用到的赋值解构，参数的接收形式为  [key,value]=[keyx,valuex];
+      //最后就可以正确得更改key和value，且返回的也是键值对的形式
       let map1 = new Map([...map0].map(function([key,value]){
           return [key,value + value + value];
       }));
