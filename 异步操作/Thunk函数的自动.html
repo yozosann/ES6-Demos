@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //继续上次Thunk函数
+
+        //模拟一个读取文件
+        function readFile(fileName,callback){
+            setTimeout(callback,1500,fileName);
+        }
+
+        //简单的Thunk转换器
+        const Thunk = function(fn){
+            return function(...args){
+                return function(callback){
+                    return fn.call(this,...args,callback);
+                }
+            }
+        }
+
+        let readFileThunk = Thunk(readFile);
+
+        var gen = function* (){
+            //readFileThunk('FileA')这里返回的是接收一个回调函数的函数
+            var r1 = yield readFileThunk('FileA');   
+            console.log(r1.toString());
+            var r2 = yield readFileThunk('FileB');
+            console.log(r2.toString());
+        }
+
+        //Generator函数的自动执行器
+        function run(fn){
+            var gen = fn();
+
+            function next(data){   //这里的回调函数的第一参数应该是error 这里简化为了理解
+                var result = gen.next(data);
+                if(result.done) return;
+                result.value(next);
+            }
+
+            next();
+        }
+
+        run(gen);
+    </script>
+</body>
+
+</html>
