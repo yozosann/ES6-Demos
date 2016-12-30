@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        /**
+         * 所谓Thunk就是指 形式转换程序 
+         * 那么Thunk就是形式转换程序函数，究竟把什么什么形式转换了呢？ 
+         * 答案就是把多参数转化为单参数， 前提被转换的函数有callback
+         */    
+
+        //模拟一个读取文件
+        function readFile(fileName,callback){
+            setTimeout(callback,1500,fileName);
+        }
+
+        //多参数情况
+        readFile('FileA',function(val){
+            console.log('Get File:',val);
+        });
+
+        //简单的Thunk转换器
+        const Thunk = function(fn){
+            return function(...args){
+                return function(callback){
+                    return fn.call(this,...args,callback);
+                }
+            }
+        }
+
+        //解读：
+        //首先先传入需要转换的函数，保存在readFileThunk的执行环境中
+        let readFileThunk = Thunk(readFile);
+
+        //然后第一次传入参数，返回一个保存了所有除回掉函数之外 参数 的函数。
+        //再一次传入回掉函数，就是调用之前保存的原函数利用出入的参数和回调，达到单参数目的
+        readFileThunk('FileA')(function(val){
+            console.log('Thunk Get File:',val);
+        })
+        //有一个包叫做thunkify 他的区别在于有检查 和原函数就算有多个callback只执行一次callback
+
+        //异步操作，保证前一步执行完，才能执行下一步
+        //Thunk函数就能派上用场  以readFileThunk为例子
+        var gen = function* (){
+            var r1 = yield readFileThunk('FileA');
+            console.log(r1.toString());
+            var r2 = yield readFileThunk('FileB');
+            console.log(r2.toString());
+        }
+
+        //手动执行 ，可想而知 如果有很多文件读取文件是很庞大的
+        var g = gen();
+        var r1 = g.next();
+        r1.value(function(data){
+            var r2 = g.next(data);
+            r2.value(function(data){
+                g.next(data);
+            });
+        });
+    </script>
+</body>
+
+</html>
