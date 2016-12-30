@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //基本用法 function后跟一个*号
+        //每个yield后是本函数的一个状态 ，return表示最后一个状态
+        function* helloWorldGenerator(){
+            yield 'hello';
+            yield 'world';
+            return 'ending';
+        }
+        //执行函数返回一个遍历器（自行百度）
+        var iteratorForHw = helloWorldGenerator();
+        
+        //第一次遍历器next，得到第一个状态 ，value就是yield之后的值
+        console.log(iteratorForHw.next());
+        //之后每next一次，得到下一个状态
+        console.log(iteratorForHw.next());
+        //当达到return的时候 done返回true
+        console.log(iteratorForHw.next());
+        //再继续next ，value就会返回undefined
+        console.log(iteratorForHw.next());
+
+        //给next函数中传值，会被当作上一个yield的返回值
+        function* f(){
+            yield 1;
+            var reset = yield 2;
+            yield reset;
+        }
+        var iteratorForF = f();
+        console.log(iteratorForF.next()); // 1,false
+        console.log(iteratorForF.next()); // 2,false 
+        //此时next中有参数
+        console.log(iteratorForF.next(3)); // 3,false ，因为3作为了yield 2的返回值，所以reset = 3，最后状态为3
+
+        //由于任何一个对象的Symbol.iterator方法都是遍历器生成函数
+        //而Generator也是遍历器生成函数，故可以直接赋值给Symbol.iterator
+        const myIterableObj = {};
+        myIterableObj[Symbol.iterator] = function* (){
+            yield 1;
+            yield 2;
+            yield 10086;
+        };
+        console.log([...myIterableObj]);
+    </script>
+</body>
+
+</html>
