@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+
+        //定义对象属性的方法
+        const obj = {};
+        //方法一
+        obj.foo = true;
+
+        //方法二 ES5不支持
+        obj['a'+'bc'] = 123;
+
+        //字面量用作对象属性或方法名
+        var key = 'foo';
+        let obj2 = {
+            [key]: true,
+            ['a'+'cc']: 111,
+            [key + key]() {
+                console.log(1);
+            }
+        }
+        console.log(obj2[key]);  //true
+        console.log(obj2.acc);   //111
+        console.log(obj2.foo);   //true
+        obj2.foofoo(); //1
+
+        //但是属性名表达式与简洁表示法不能同时使用
+        //var pn = 'ww';
+        //var bazz = { [pn] }; 语法错误
+        //字面量是其他对象 不是字符串可能会发生强制类型转换为字符串
+
+    </script>
+</body>
+</html>
