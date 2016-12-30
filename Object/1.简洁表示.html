@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+
+        //简写属性，属性名为变量名，属性值为变量的值
+        var foo = 'bar';
+        var baz = {
+            foo
+        }
+        //等同于
+        // var baz = {foo: foo};
+
+        //简写方法
+        var o = {
+            method(){
+                return 'halo';
+            }
+        }
+        //等同于  method : function(){...}
+
+        //注意点： 
+        //1.写关键字当键名时不能这么写 会解析出错 应该'class': ..
+        //2.generator函数在名字前加*
+
+        var obj = {
+            * gen(){
+                yield 'halo';
+            }
+        };
+    </script>
+</body>
+</html>
