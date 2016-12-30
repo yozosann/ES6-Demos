@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        //yield*语句,调用另一个Generator函数
+        function* foo(){
+            yield 'a';
+            yield 'b';
+        }
+
+        function* bar(){
+            yield 'x';
+            foo();
+            yield 'y';
+        }
+
+        //没有任何效果 只会输出 x y
+        for(let v of bar()){
+            console.log(v);
+        }  
+
+        //但是 如果加上yield* 
+        function* bar2(){
+            yield 'x';
+            yield* foo();
+            yield 'y';
+        }
+        //输出x a b y
+        for(let v of bar2()){
+            console.log('加上yield*后',v);
+        }
+
+        //含有yield*的Generator函数被称为代理者，这里指bar1
+        //yield* 后接的Generator函数被称为被代理者，这里指foo
+
+        //等同于
+        function* bar3(){
+            yield 'x';
+            yield 'a';
+            yield 'b';
+            yield 'y';
+        }
+        //和
+        function* bar4(){
+            yield 'x';
+            for(let v of foo()){
+                yield v;
+            }
+            yield 'y';
+        }
+
+        //如果被代理的函数中有return语句，那么可以向代理他的Generator函数返回数据
+        function* delegated(){
+            yield 1;
+            yield 2;
+            return 3;
+        }
+
+        function* delegating(){
+            var result = yield* delegated();
+            yield 5;
+            console.log('代理者接收到的return值',result);
+            yield 6;
+        }
+        for(let item of delegating()){
+            console.log('delegated含有return',item);
+        }
+
+        //有次可以得知 yield* 后面的Generator函数完全就是for...of的一个简写
+        //又知道for...of执行的时候，实质上是遍历 遍历器，遍历器由遍历器函数生成
+        //Symbol.iterator和Generator函数都是遍历器生成函数
+        //故yield* 后可以跟带有Symbol.iterator接口的对象
+        function* gen(){
+           yield* ["a", "b", "c"];
+        }
+        for(let item of gen()){
+            console.log('接数组：',item);
+        }
+
+        //不能作为构造函数
+    </script>
+</body>
+
+</html>
