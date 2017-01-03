@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        /**
+         * 1.将Object偏向于内部语言的方法移植到了Reflect上
+         * 2.修改Object的某些方法，让返回结果更为合理
+         * 3.让Object的一些指令操作都变为函数操作
+         * 4.配合proxy对象
+         */
+
+         var myObject = {
+             foo: 1,
+             bar: 2,
+             get baz(){
+                 return this.foo + this.bar;
+             },
+             set bbb(value){
+                 this.bar = value;
+             },
+             baa(){
+                 return this.bar;
+             }
+         }
+         //方法
+
+         //1.Reflect.get 返回对象name属性的值
+         console.log(Reflect.get(myObject,'foo'));
+         console.log(Reflect.get(myObject,'baa'));
+         //若设置有getter则读取this绑定receiver
+         console.log(Reflect.get(myObject,'baz'));
+         var myReceiverObject = {
+             foo:4,
+             bar:4
+         }
+
+         console.log(Reflect.get(myObject,'baz',myReceiverObject));
+
+         //2.Reflect.set 设置对象name属性的值
+         Reflect.set(myObject, 'foo', 3);
+         console.log('set:', myObject.foo);
+         //若设置有setter则 设置this绑定receiver
+         Reflect.set(myObject, 'bar', 5, myReceiverObject);
+         console.log('set:',myReceiverObject.bar);
+
+         //3.Reflect.has(obj, name) 对应name in obj 中的in
+         console.log('has',Reflect.has(myObject,'foo'));
+
+         //4.Reflect.delect(obj,name) 对应 delete obj.proName
+         Reflect.deleteProperty(myObject,'baa');
+         console.log(myObject.baa); // undefined
+
+         //5.Reflect.construct(target,args) 提供了一种不用new调用构造函数的方法
+         class Boy{
+             constructor(name){
+                 this.name = name;
+             }
+         }
+         const boy = Reflect.construct(Boy,['Yozo']);
+         console.log(boy);
+
+         //6.Reflect.getPrototypeOf(obj),Reflect.setPrototypeOf(obj)同Object方法
+
+         //7.Reflect.apply(func,thisArg,args) 等同于 Function.prototype.apply.call(func, thisArg, args)
+         //函数，提供函数调用的this指针，参数数组
+         const ages = [11, 33, 12, 33, 32, 24, 56];
+
+         //ES5 youngest = Math.min.apply(Math, ages);
+         const youngest = Reflect.apply(Math.min, Math, ages);
+         //ES6 另一种写法 Math.min(...ages);  
+         const oldest = Reflect.apply(Math.max,Math,ages);
+         const type = Reflect.apply(Object.prototype.toString, Object.prototype, [youngest]);
+         console.log(type);
+
+         //8.Reflect.defineProperty(target, propertyKey, attributes)同Object方法
+
+         //9.Reflect.getOwnPropertyDescriptor(target, propertyKey)同Object方法
+
+         //10.Reflect.isExtensible (target)  同Object方法
+
+         //11.Reflect.preventExtensions (target)  同Object方法
+
+         //12.Reflect.ownKeys(target) 在对象的遍历有将到
+         //相当于Object.getOwnPropertyNames与Object.getOwnPropertySymbols之和
+         //能返回不可枚举 也可以返回Symbols 
+    </script>
+</body>
+</html>
