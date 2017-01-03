@@ -55,7 +55,7 @@
             console.log('Object.getOwnPropertyNames():',item);
         }
 
-        //4.Object.getOwnPropertySymbols(obj) 自身所有属性（包括不可枚举），包含Symbol
+        //4.Object.getOwnPropertySymbols(obj) 只有自身的Symbol
         for(let item of Object.getOwnPropertySymbols(obj)){
             console.log('Object.getOwnPropertySymbols():',item);
         }
