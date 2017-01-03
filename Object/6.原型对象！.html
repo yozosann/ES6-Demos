@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        //读取当前对象的prototype属性
+        var someOtherObj = {
+            a: 0,
+            b: 1
+        }
+        //ES5
+        var objj1 = Object.create(someOtherObj);
+
+        //ES6
+        //并不是共有的API 很不建议使用
+        var objj2 = {};
+        objj2.__proto__ = someOtherObj;
+
+        console.log(objj1,objj2);
+
+        //不能使用，那么真正提供使用的API是？Object.setPrototypeOf(a,b)
+        // 作用  a.__proto__ = b 且return a
+        var o = Object.setPrototypeOf({},someOtherObj);    
+        console.log(o);
+
+        let proto = {};
+        var obj = { x:10 };
+        Object.setPrototypeOf(obj,proto);
+
+        proto.y = 20;
+        proto.z = 30;
+        console.log(obj.x, obj.y, obj.z);
+
+        //配套方法 Object.getPrototypeOf(obj)
+        console.log(Object.getPrototypeOf(obj));
+    </script>
+</body>
+</html>
