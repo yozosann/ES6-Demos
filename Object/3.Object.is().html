@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+
+        //Object.is()   与===相似， 区别在于NaN和 +0,-0的比较
+        console.log(Object.is({},{}));
+
+        //NaN
+        console.log('Object.is:',Object.is(NaN,NaN));  //true
+        console.log('=== :',NaN == NaN);  //false
+
+        //-0,+0
+        console.log('Object.is:',Object.is(+0,-0));  //false
+        console.log('=== :',+0 === -0);   //true
+    </script>
+</body>
+</html>
