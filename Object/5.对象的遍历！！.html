@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        //五种遍历
+        class Parent{
+            constructor(val){
+                this.parentValue = val;
+            }
+
+            add(){
+                console.log(this.parentValue);
+            }
+        }
+
+        class Child extends Parent{
+            constructor(val1,val2){
+                super(val1);
+                this.childValue = val2;             
+            }
+        }
+
+        Child.prototype.yokooooo = '20';
+
+        const obj = new Child('aaa','bbb');
+
+        Object.assign(obj,{
+            [Symbol()] : 'symbol'
+        });
+
+        Object.defineProperty(obj, 'yozo', {
+            value:'21',
+            enumerable:false
+        })
+        console.log(obj);
+
+        //1.for...in  自身可枚举，继承可枚举，不含Symbol
+        for(let item in obj){
+            console.log('for...in:',item);
+        }
+
+        //2.Object.keys(obj) 自身可枚举（不含继承），不含Symbol 
+        //这里还有配套方法 Object.values  Object.entries 分别表示自身可枚举（不含继承），不含Symbol的值和键值对
+        for(let item of Object.keys(obj)){
+            console.log('Object.keys():',item);
+        }
+
+        //3.Object.getOwnPropertyNames(obj) 自身所有属性（包括不可枚举），不含Symbol
+        for(let item of Object.getOwnPropertyNames(obj)){
+            console.log('Object.getOwnPropertyNames():',item);
+        }
+
+        //4.Object.getOwnPropertySymbols(obj) 自身所有属性（包括不可枚举），包含Symbol
+        for(let item of Object.getOwnPropertySymbols(obj)){
+            console.log('Object.getOwnPropertySymbols():',item);
+        }
+
+        //Reflect.ownKeys(obj)  自身所有属性（包括不可枚举），包含Symbol
+        for(let item of Reflect.ownKeys(obj)){
+            console.log('Reflect.ownKeys():',item);
+        }
+
+
+        //生成顺序：  先数字（按大小）  再字母（按生成时间）  最后Symbol（按生成时间）
+    </script>
+</body>
+</html>
