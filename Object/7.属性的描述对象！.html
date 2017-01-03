@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        //获取属性的描述对象 Object.getOwnPropertyDescriptor(objName,propertyName)
+        //         所有属性 Object.getOwnPropertyDescriptors(objName)   ES7 非继承
+        var obj = { p:'a'};
+        console.log(Object.getOwnPropertyDescriptor(obj,'p'));
+        /**
+         * return:
+         * {
+         *     configurable: true, 表示对象的属性是否可以被删除，以及除 writable 特性外的其他特性是否可以被修改。  
+         *     enumerable: true,  定义了对象的属性是否可以在 for...in 循环和 Object.keys() 中被枚举
+         *     value: "a",   表示对象属性的值
+         *     writable: true  表示对象的属性是否可以被修改
+         * }
+         */
+
+         //Object.getOwnPropertyDescriptor() 配合 Object.defineProperties
+
+         //set不能被Object.assgin()所拷贝 故
+         const source  = {
+             set foo(value){
+                 console.log(value);
+             }
+         }
+         const target = {};
+         const desObj = Object.getOwnPropertyDescriptors(source);
+         console.log(desObj);
+         Object.defineProperties(target,desObj);
+         console.log(Object.getOwnPropertyDescriptor(target, 'foo'));
+         //提炼为一个方法
+         const shallowMerge = (target, source) => Object.defineProperties(
+             target,
+             Object.getOwnPropertyDescriptors(source)           
+         )
+
+         //搭配Object.create 克隆一个新对象 浅拷贝
+         const clone = Object.create(
+             Object.getPrototypeOf(obj),
+             Object.getOwnPropertyDescriptors(obj)
+         );
+         //提炼为一个方法
+         const shallowClone = obj => Object.create(
+             Object.getPrototypeOf(obj),
+             Object.getOwnPropertyDescriptors(obj)  
+         );
+         console.log(clone);
+    </script>
+</body>
+</html>
