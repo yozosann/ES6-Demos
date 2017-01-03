@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        //Object.assigh() 对象的合并
+        var target = { a: 1 };
+
+        var source1 = { b: 2 };
+        var source2 = { c: 3 };
+        Object.assign(target, source1, source2);
+        console.log('合并后的target:',target);
+
+        //1.单参数则直接返回该参数
+        //如果不是对象则转为对象， undefined和null不能转为对象，做参数会报错
+        console.log(Object.assign(2));
+
+        //2.拷贝入目标对象，不是对象的除了字符串都不会起效
+        var obj = Object.assign({},'abc',1,true);
+        console.log(obj);  //Object {0: "a", 1: "b", 2: "c"}
+
+        //3.Object.assign() 能拷贝的属性是有限的 ， 不能拷贝继承属性和不可枚举属性
+        console.log(Object.assign({ b: 'c'}, 
+          Object.defineProperty({},'invisible',{
+              enumerable:false,
+              value: 'hello'
+          })
+        ));   //Object {b: "c"}
+        console.log(Object.assign({ b: 'c'}, 
+          Object.defineProperty({},'invisible',{
+              enumerable:true,
+              value: 'hello'
+          })
+        ));   //Object {b: "c", invisible: "hello"}
+
+        //4.浅拷贝，若被拷贝对象的属性值是对象，那么返回的对象得到的只是引用
+        var obj1 = { b: { c: 'a'} };
+        var obj2 = Object.assign({}, obj1);
+        console.log(obj2.b.c);   // 'a'
+        obj2.b.c = 2;
+        console.log(obj1.b.c);    //2
+
+        //5.遇见同名属性 不是添加，而是覆盖
+        console.log(Object.assign({ a: 1 },{ a: 2 }));   //Object {a: 2}
+        console.log(Object.assign([1,2,3],[4,5]));   //[4,5,3]
+
+        //应用：
+
+        //1.为对象添加属性
+        class Point {
+            constructor(x,y){
+                Object.assign(this,{x,y});
+            }
+        }
+
+        var p = new Point(1,2);
+        console.log(p);
+
+        //2.为对象添加新方法
+        Object.assign(Point.prototype,{
+            add(){
+                console.log(this.x + this.y);
+            }
+        })
+        p.add();  //3
+        
+         
+    </script>
+</body>
+</html>
